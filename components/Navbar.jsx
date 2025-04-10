@@ -30,7 +30,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
       </div>
 
       <nav
-        className={`w-full fixed lg:px-8 xl:px-[8%] py-1 flex items-center justify-between z-50 ${
+        className={`w-full fixed px-1 lg:px-8 xl:px-[8%] py-1 flex items-center justify-between z-50 ${
           isScroll
             ? "bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20"
             : ""
@@ -40,7 +40,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
           <Image
             src={isDarkMode ? assets.logo_dark : assets.logo}
             alt=""
-              className="h-20 max-h-20 w-auto cursor-pointer mr-14 object-contain"
+            className="h-20 max-h-20 w-auto cursor-pointer mr-14 object-contain"
           />
         </a>
 
