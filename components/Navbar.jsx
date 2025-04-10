@@ -83,7 +83,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
             <Image
               src={isDarkMode ? assets.sun_icon : assets.moon_icon}
               alt=""
-              className="w-6"
+              className="w-6 mr-2"
             />
           </button>
 
@@ -99,11 +99,11 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
             />
           </a>
 
-          <button className="block md:hidden mx-3" onClick={openMenu}>
+          <button className="block md:hidden mx-" onClick={openMenu}>
             <Image
               src={isDarkMode ? assets.menu_white : assets.menu_black}
               alt=""
-              className="w-6"
+              className="w-6 mr-4"
             />
           </button>
         </div>
