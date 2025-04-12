@@ -90,13 +90,13 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
 
           <a
             href="#contact"
-            className="hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4 font-Ovo dark:border-white/50"
+            className="hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-400 hover:border-gray-900 rounded-full ml-4 font-Ovo dark:border-white/50 transition duration-300 ease-in-out transform dark:hover:bg-gray-700 hover:bg-gray-100 dark:hover:border-gray-300"
           >
             Contact
             <Image
               src={isDarkMode ? assets.arrow_icon_dark : assets.arrow_icon}
               alt=""
-              className="w-3"
+              className="w-3  "
             />
           </a>
 
