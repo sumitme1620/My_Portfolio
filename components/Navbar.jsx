@@ -1,3 +1,4 @@
+"use client";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
@@ -40,7 +41,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
           <Image
             src={isDarkMode ? assets.logo_dark : assets.logo}
             alt=""
-            className="h-20 max-h-20 w-auto cursor-pointer mr-14 object-contain"
+            className="w-24 cursor-pointer mr-14 object-contain rounded-full"
           />
         </a>
 
@@ -61,14 +62,14 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
               About me
             </a>
           </li>
-          {/* <li>
-            <a className="font-Ovo" href="#services">
-              Services
-            </a>
-          </li> */}
           <li>
             <a className="font-Ovo" href="#work">
               My Work
+            </a>
+          </li>
+          <li>
+            <a className="font-Ovo" href="#testimonials">
+              Testimonials
             </a>
           </li>
           <li>
@@ -132,11 +133,11 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
               About me
             </a>
           </li>
-          {/* <li>
-            <a className="font-Ovo" onClick={closeMenu} href="#services">
-              Services
+          <li>
+            <a className="font-Ovo" onClick={closeMenu} href="#testimonials">
+              Testimonials
             </a>
-          </li> */}
+          </li>
           <li>
             <a className="font-Ovo" onClick={closeMenu} href="#work">
               My Work
