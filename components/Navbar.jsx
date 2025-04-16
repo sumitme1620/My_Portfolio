@@ -41,7 +41,7 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
           <Image
             src={isDarkMode ? assets.logo_dark : assets.logo}
             alt=""
-            className="w-24 cursor-pointer mr-14 object-contain rounded-full"
+            className="w-16 md:w-20 cursor-pointer mr-14 object-contain rounded-full"
           />
         </a>
 
