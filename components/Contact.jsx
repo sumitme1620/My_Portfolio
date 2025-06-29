@@ -7,29 +7,93 @@ import { motion } from "motion/react";
 const Contact = () => {
   const [result, setResult] = useState("");
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    setResult("Sending....");
-    const formData = new FormData(event.target);
+  // const onSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setResult("Sending....");
+  //   const formData = new FormData(event.target);
 
-    // Enter your web3 froms access key below
-    formData.append("access_key", "07867fe5-1ae0-45db-b145-13467f45c6f9");
+  //   const response = await fetch("/api/contact", {
+  //     method: "POST",
+  //     body: formData,
+  //   });
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData,
-    });
+  //   const data = await response.json();
 
-    const data = await response.json();
+  //   if (data.success) {
+  //     setResult("Form Submitted Successfully");
+  //     event.target.reset();
+  //     setTimeout(() => {
+  //       setResult("");
+  //     }, 4000);
+  //   } else {
+  //     console.log("Error", data);
+  //     setResult(data.message);
+  //     setTimeout(() => {
+  //       setResult("");
+  //     }, 4000);
+  //   }
+  // };
 
-    if (data.success) {
-      setResult("Form Submitted Successfully");
-      event.target.reset();
-    } else {
-      console.log("Error", data);
-      setResult(data.message);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setResult("sending");
+
+    const formData = {
+      name: e.target.name.value.trim(),
+      email: e.target.email.value.trim(),
+      message: e.target.message.value.trim(),
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult("success");
+        e.target.reset();
+      } else {
+        setResult("error");
+      }
+    } catch (error) {
+      setResult("error");
+    }
+
+    setTimeout(() => setResult(""), 4000);
+  };
+
+  const getMessageContent = () => {
+    switch (result) {
+      case "sending":
+        return {
+          msg: "Sending...",
+          style:
+            "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-200",
+          icon: "spinner",
+        };
+      case "success":
+        return {
+          msg: "Form Submitted Successfully",
+          style:
+            "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200",
+          icon: "check",
+        };
+      case "error":
+        return {
+          msg: "Submission failed. Please try again.",
+          style: "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-200",
+          icon: "cross",
+        };
+      default:
+        return null;
     }
   };
+
+  const alert = getMessageContent();
 
   return (
     <motion.div
@@ -68,13 +132,13 @@ const Contact = () => {
       </motion.p>
 
       <motion.form
+        onSubmit={onSubmit}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ delay: 0.9, duration: 0.5 }}
-        onSubmit={onSubmit}
         className="max-w-2xl mx-auto"
       >
-        <div className="grid grid-cols-auto gap-6 mt-10 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 mb-8">
           <motion.input
             initial={{ x: -50, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
@@ -97,6 +161,7 @@ const Contact = () => {
             name="email"
           />
         </div>
+
         <motion.textarea
           initial={{ y: 100, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -115,10 +180,52 @@ const Contact = () => {
           className="py-3 px-8 w-max flex items-center justify-between gap-2 bg-black/80 text-white rounded-full mx-auto hover:bg-black duration-500 dark:bg-transparent dark:border-[0.5px] dark:hover:bg-darkHover"
         >
           Submit now{" "}
-          <Image src={assets.right_arrow_white} alt="" className="w-4" />
+          <Image src={assets.right_arrow_white} alt="arrow" className="w-4" />
         </motion.button>
 
-        <p className="mt-4">{result}</p>
+        {alert && (
+          <motion.div
+            role="alert"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`mt-6 flex items-center gap-2 justify-center rounded-md px-4 py-3 text-sm font-medium shadow-sm max-w-md mx-auto ${alert.style}`}
+          >
+            {alert.icon === "spinner" && (
+              <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+            )}
+            {alert.icon === "check" && (
+              <svg
+                className="w-5 h-5 text-green-700 dark:text-green-200"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            )}
+            {alert.icon === "cross" && (
+              <svg
+                className="w-5 h-5 text-red-700 dark:text-red-200"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            )}
+            <span>{alert.msg}</span>
+          </motion.div>
+        )}
       </motion.form>
     </motion.div>
   );
