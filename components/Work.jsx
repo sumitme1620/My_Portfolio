@@ -1,110 +1,61 @@
 "use client";
-import { assets, workData } from "@/assets/assets";
-import Image from "next/image";
-import React, { useState } from "react";
-import { motion } from "framer-motion"; // updated import path
 
-const Work = ({ isDarkMode }) => {
+import { useState } from "react";
+import { workData } from "@/assets/assets";
+import Reveal from "./ui/Reveal";
+import SectionHeading from "./ui/SectionHeading";
+import ProjectCard from "./ui/ProjectCard";
+
+const Work = () => {
   const [showAll, setShowAll] = useState(false);
+
   const visibleProjects = showAll ? workData : workData.slice(0, 3);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+    <section
       id="work"
-      className="w-full px-[4%] lg:px-[12%] py-10 scroll-mt-20"
+      className="w-full px-[4%] py-16 scroll-mt-20 lg:px-[12%]"
     >
-      <motion.h4
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-        className="text-center mb-2 text-lg font-Ovo"
-      >
-        My portfolio
-      </motion.h4>
+      <SectionHeading
+        eyebrow="My portfolio"
+        title="Projects"
+        intro="Production-ready AI SaaS, developer platforms, and enterprise applications I've built."
+      />
 
-      <motion.h2
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-        className="text-center text-5xl font-Ovo"
-      >
-        My latest work
-      </motion.h2>
-
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
-        className="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo"
-      >
-        Welcome to my web development portfolio! Explore a collection of
-        projects showcasing my expertise in front-end development.
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.9, duration: 0.6 }}
-        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 my-10 gap-5 dark:text-black"
-      >
+      <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
         {visibleProjects.map((project, index) => (
-          <a
-            key={index}
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block"
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              className="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
-              style={{ backgroundImage: `url(${project.bgImage})` }}
-            >
-              <div className="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
-                <div>
-                  <h2 className="font-semibold">{project.title}</h2>
-                  <p className="text-sm text-gray-700">{project.description}</p>
-                </div>
-                <div className="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
-                  <Image
-                    src={assets.send_icon}
-                    alt="send icon"
-                    className="w-5"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </a>
+          <Reveal key={project.title} as="div" delay={index * 0.05}>
+            <ProjectCard project={project} />
+          </Reveal>
         ))}
-      </motion.div>
+      </div>
 
       {workData.length > 3 && (
-        <motion.button
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 1.1, duration: 0.5 }}
-          onClick={() => setShowAll(!showAll)}
-          className="w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto my-20 hover:bg-lightHover duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover"
-        >
-          {showAll ? "Show less" : "Show more"}
-          <Image
-            src={
-              isDarkMode
-                ? assets.right_arrow_bold_dark
-                : assets.right_arrow_bold
-            }
-            alt="Right arrow"
-            className={`w-4 transform transition-transform duration-300 ${
-              showAll ? "rotate-90" : ""
-            }`}
-          />
-        </motion.button>
+        <Reveal as="div" delay={0.15} className="flex justify-center">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto my-20 hover:bg-lightHover duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover"
+          >
+            {showAll ? "Show less" : "Show more"}
+
+            <svg
+              className={`w-4 transition-transform duration-300 ${
+                showAll ? "rotate-180" : ""
+              }`}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14" />
+              <path d="M13 6l6 6-6 6" />
+            </svg>
+          </button>
+        </Reveal>
       )}
-    </motion.div>
+    </section>
   );
 };
 

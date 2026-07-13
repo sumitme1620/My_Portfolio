@@ -1,103 +1,83 @@
-"use client";
 import Image from "next/image";
-import React from "react";
-import { motion } from "framer-motion";
+import Reveal from "./ui/Reveal";
+import SectionHeading from "./ui/SectionHeading";
 
 const testimonialsData = [
   {
-    name: "Mudavath Chandar ",
-    title: "Project Manager @ StartUpodero Ventures",
+    name: "Hitesh Kale",
+    title: "Head of Engineering @ 169Pi",
     testimonial:
-      "Sumit is one of the most reliable frontend developers I’ve worked with. His attention to detail and commitment to delivering pixel-perfect UIs made a huge difference on our project.",
-    image: "/mudavath.png", // Replace with actual image URL
+      "Sumit consistently delivers scalable, production-ready frontend solutions with strong ownership and attention to quality. His ability to collaborate across teams and execute complex product requirements makes him a valuable engineer.",
+    image: "/hitesh.png",
   },
   {
-    name: "Ariz Shahid",
-    title: "Senior Developer @ StartUpodero Ventures",
+    name: "Ali Hussain",
+    title: "Frontend Head @ 169Pi",
     testimonial:
-      "It’s always a pleasure working with Sumit. As a frontend developer, he brings exceptional design intuition and consistently delivers smooth, user-friendly, and pixel-perfect interfaces.",
-    image: "/ariz.png", // Replace with actual image URL
+      "Working with Sumit has been a great experience. He writes clean, maintainable React and Next.js code, takes ownership of challenging features, and consistently delivers pixel-perfect, high-performance user interfaces.",
+    image: "/ali.png",
   },
   {
-    name: "Manish Jha",
-    title: "Frontend Lead @ 169Pi.ai",
+    name: "Muskan Jaiswal",
+    title: "Product Designer @ 169Pi",
     testimonial:
-      "Sumit’s problem-solving skills and dedication are unparalleled. He takes ownership of projects and always goes the extra mile to deliver high-quality results.",
-    image: "/manish.png", // Replace with actual image URL
+      "Sumit transforms complex Figma designs into polished, responsive interfaces with exceptional attention to detail. His focus on user experience and collaboration makes the design-to-development process seamless.",
+    image: "/muskan.png",
+  },
+  {
+    name: "Deepanshu Verma",
+    title: "AI Engineer @ 169Pi",
+    testimonial:
+      "Working with Sumit has always been seamless. He quickly understands complex AI workflows and transforms them into intuitive, user-friendly interfaces. His frontend expertise and collaborative approach make product development faster and more efficient.",
+    image: "/deepanshu.png",
   },
 ];
 
 const Testimonials = () => {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+    <section
       id="testimonials"
-      className="w-full px-[4%] lg:px-[12%] py-10 scroll-mt-20"
+      className="w-full px-[4%] py-16 scroll-mt-20 lg:px-[12%]"
     >
-      <motion.h4
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-        className="text-center mb-2 text-lg font-Ovo"
-      >
-        What People Say
-      </motion.h4>
+      <SectionHeading
+        eyebrow="What people say"
+        title="Testimonials"
+        intro="Feedback from engineering leaders and teammates I've collaborated with on AI products."
+      />
 
-      <motion.h2
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-        className="text-center text-5xl font-Ovo"
-      >
-        Testimonials
-      </motion.h2>
-
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
-        className="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo"
-      >
-        Here’s what some of my colleagues and clients have said about my work as
-        a frontend developer.
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.9, duration: 0.6 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 my-10"
-      >
+      <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
         {testimonialsData.map(({ name, title, testimonial, image }, index) => (
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            key={index}
-            className="border border-gray-400 rounded-lg px-8 py-12 hover:shadow-black cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 dark:hover:bg-darkHover dark:hover:shadow-white"
+          <Reveal
+            as="figure"
+            key={name}
+            delay={index * 0.05}
+            className="rounded-lg border border-gray-400 px-8 py-12 transition duration-300 hover:-translate-y-1 hover:bg-lightHover hover:shadow-black dark:border-white/40 dark:hover:bg-darkHover dark:hover:shadow-white"
           >
-            <div className="flex justify-center mb-4">
+            <div className="mb-4 flex justify-center">
               <Image
                 src={image}
-                alt={name}
-                className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
+                alt={`Photo of ${name}`}
+                className="h-16 w-16 rounded-full border-2 border-gray-300 object-cover"
                 width={64}
                 height={64}
+                sizes="64px"
               />
             </div>
 
-            <p className="text-gray-600 mb-4 text-sm dark:text-white/80">
-              "{testimonial}"
-            </p>
+            <blockquote className="mb-4 text-sm text-gray-600 dark:text-white/80">
+              &ldquo;{testimonial}&rdquo;
+            </blockquote>
 
-            <h3 className="text-lg my-4 text-gray-700 dark:text-white">
-              {name}
-            </h3>
-            <p className="text-sm text-gray-500 dark:text-white/80">{title}</p>
-          </motion.div>
+            <figcaption>
+              <p className="text-lg text-gray-700 dark:text-white">{name}</p>
+              <p className="text-sm text-gray-500 dark:text-white/80">
+                {title}
+              </p>
+            </figcaption>
+          </Reveal>
         ))}
-      </motion.div>
-    </motion.div>
+      </div>
+    </section>
   );
 };
 

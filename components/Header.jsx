@@ -1,77 +1,77 @@
-"use client";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
-import React from "react";
-import { motion } from "motion/react";
+import Reveal from "./ui/Reveal";
 
-const Header = ({ isDarkMode }) => {
+// TODO: expand the bio with your exact company timeline if you'd like it shown.
+const Header = () => {
   return (
-    <div className="w-11/12 max-w-3xl text-center mx-auto h-screen flex flex-col items-center justify-center gap-4">
-      <motion.div
-        initial={{ scale: 0 }}
-        whileInView={{ scale: 1 }}
-        transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-        className=""
-      >
+    <header
+      id="top"
+      className="w-11/12 max-w-3xl text-center mx-auto min-h-screen flex flex-col items-center justify-center gap-4 pt-28 pb-12"
+    >
+      <Reveal as="div" y={0} duration={0.7}>
         <Image
-          src={isDarkMode ? assets.user_dark_image : assets.user_light_image}
-          alt=""
-          className="rounded-full w-32 h-32"
+          src={assets.user_light_image}
+          alt="Portrait of Sumit Singh"
+          className="rounded-full w-32 h-32 object-cover dark:hidden"
+          priority
         />
-      </motion.div>
-      <motion.h3
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="flex items-end gap-2 text-xl md:text-2xl mb-3 font-Ovo"
-      >
-        Hi! I'm Sumit Singh{" "}
-        <Image src={assets.hand_icon} alt="" className="w-6" />
-      </motion.h3>
-      <motion.h1
-        initial={{ y: -30, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-        className="text-3xl sm:text-6xl lg:text-[66px] font-Ovo"
-      >
-        frontend web developer based in Mumbai.
-      </motion.h1>
+        <Image
+          src={assets.user_dark_image}
+          alt="Portrait of Sumit Singh"
+          className="rounded-full w-32 h-32 object-cover hidden dark:block"
+          priority
+        />
+      </Reveal>
 
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.7 }}
-        className="max-w-2xl mx-auto font-Ovo"
+      <Reveal
+        as="h3"
+        delay={0.2}
+        className="flex items-center justify-center gap-2 text-xl md:text-2xl mb-1 font-Ovo"
       >
-        I am a frontend developer from Mumbai, India with 3 years of experience
-        in multiple companies like StartUpoderoVenturesPvt.Ltd and
-        BuddhiMatrixPvt.Ltd. (169pi.ai).
-      </motion.p>
+        Hi! I&apos;m Sumit Singh
+        <Image src={assets.hand_icon} alt="waving hand" className="w-6" />
+      </Reveal>
+
+      <Reveal
+        as="h1"
+        delay={0.3}
+        className="text-4xl sm:text-6xl lg:text-[66px] font-Ovo leading-tight"
+      >
+        Senior Frontend Developer Building Scalable AI SaaS Products.
+      </Reveal>
+
+      <Reveal as="p" delay={0.5} className="max-w-2xl mx-auto font-Ovo">
+        I&apos;m a Senior Frontend Developer from Mumbai with 4+ years of
+        experience building scalable AI SaaS products using React.js, Next.js,
+        JavaScript, Redux Toolkit, and Tailwind CSS. I specialize in frontend
+        architecture, performance optimization, authentication systems, and
+        delivering production-ready user experiences.
+      </Reveal>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
-        <motion.a
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1 }}
+        <Reveal
+          as="a"
+          delay={0.7}
           href="#contact"
-          className="px-10 py-3 border border-white rounded-full bg-black text-white flex items-center gap-2 dark:bg-transparent"
+          className="px-10 py-3 border border-white rounded-full bg-black text-white flex items-center gap-2 dark:bg-transparent transition-transform hover:scale-105"
         >
-          contact me{" "}
+          Contact me
           <Image src={assets.right_arrow_white} alt="" className="w-4" />
-        </motion.a>
+        </Reveal>
 
-        <motion.a
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
+        <Reveal
+          as="a"
+          delay={0.8}
           href="/Sumit_Singh_CV.pdf"
           download
-          className="px-10 py-3 border rounded-full border-gray-500 flex items-center gap-2 bg-white dark:text-black"
+          className="px-10 py-3 border rounded-full border-gray-500 flex items-center gap-2 bg-white text-black transition-transform hover:scale-105"
         >
-          my resume <Image src={assets.download_icon} alt="" className="w-4" />
-        </motion.a>
+          Download resume
+          <Image src={assets.download_icon} alt="" className="w-4" />
+        </Reveal>
       </div>
-    </div>
+    </header>
   );
 };
 

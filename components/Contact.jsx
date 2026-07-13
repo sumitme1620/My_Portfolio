@@ -1,56 +1,55 @@
 "use client";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
+import SectionHeading from "./ui/SectionHeading";
+
+const ALERTS = {
+  sending: {
+    msg: "Sending...",
+    style:
+      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-200",
+    icon: "spinner",
+  },
+  success: {
+    msg: "Message sent successfully!",
+    style:
+      "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200",
+    icon: "check",
+  },
+  error: {
+    msg: "Submission failed. Please try again.",
+    style: "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-200",
+    icon: "cross",
+  },
+};
+
+const inputClasses =
+  "w-full p-3 rounded-md outline-none border-[0.5px] border-gray-400 bg-white dark:bg-darkHover/30 dark:border-white/90";
 
 const Contact = () => {
   const [result, setResult] = useState("");
-
-  // const onSubmit = async (event) => {
-  //   event.preventDefault();
-  //   setResult("Sending....");
-  //   const formData = new FormData(event.target);
-
-  //   const response = await fetch("/api/contact", {
-  //     method: "POST",
-  //     body: formData,
-  //   });
-
-  //   const data = await response.json();
-
-  //   if (data.success) {
-  //     setResult("Form Submitted Successfully");
-  //     event.target.reset();
-  //     setTimeout(() => {
-  //       setResult("");
-  //     }, 4000);
-  //   } else {
-  //     console.log("Error", data);
-  //     setResult(data.message);
-  //     setTimeout(() => {
-  //       setResult("");
-  //     }, 4000);
-  //   }
-  // };
+  const isSending = result === "sending";
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setResult("sending");
 
-    const formData = {
-      name: e.target.name.value.trim(),
-      email: e.target.email.value.trim(),
-      message: e.target.message.value.trim(),
+    const formData = new FormData(e.target);
+    const payload = {
+      name: (formData.get("name") || "").toString().trim(),
+      email: (formData.get("email") || "").toString().trim(),
+      message: (formData.get("message") || "").toString().trim(),
+      company: (formData.get("company") || "").toString().trim(),
     };
 
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
-
       const data = await response.json();
 
       if (data.success) {
@@ -59,146 +58,110 @@ const Contact = () => {
       } else {
         setResult("error");
       }
-    } catch (error) {
+    } catch {
       setResult("error");
     }
 
     setTimeout(() => setResult(""), 4000);
   };
 
-  const getMessageContent = () => {
-    switch (result) {
-      case "sending":
-        return {
-          msg: "Sending...",
-          style:
-            "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-200",
-          icon: "spinner",
-        };
-      case "success":
-        return {
-          msg: "Form Submitted Successfully",
-          style:
-            "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200",
-          icon: "check",
-        };
-      case "error":
-        return {
-          msg: "Submission failed. Please try again.",
-          style: "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-200",
-          icon: "cross",
-        };
-      default:
-        return null;
-    }
-  };
-
-  const alert = getMessageContent();
+  const alert = ALERTS[result];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+    <section
       id="contact"
-      className='w-full px-[12%] py-10 scroll-mt-20 bg-[url("/footer-bg-color.png")] bg-no-repeat bg-center bg-[length:90%_auto] dark:bg-none'
+      className='w-full px-[12%] py-16 scroll-mt-20 bg-[url("/footer-bg-color.png")] bg-no-repeat bg-center bg-[length:90%_auto] dark:bg-none'
     >
-      <motion.h4
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-        className="text-center mb-2 text-lg font-Ovo"
-      >
-        Connect with me
-      </motion.h4>
-
-      <motion.h2
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-        className="text-center text-5xl font-Ovo"
-      >
-        Get in touch
-      </motion.h2>
-
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
-        className="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo"
-      >
-        I'd love to hear from you! If you have any questions, comments, or
-        feedback, please use the form below.
-      </motion.p>
+      <SectionHeading
+        eyebrow="Connect with me"
+        title="Get in touch"
+        intro="I'd love to hear from you. Have a question, an opportunity, or just want to say hi? Drop me a message below."
+      />
 
       <motion.form
         onSubmit={onSubmit}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.9, duration: 0.5 }}
-        className="max-w-2xl mx-auto"
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="mx-auto mt-12 max-w-2xl"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10 mb-8">
-          <motion.input
-            initial={{ x: -50, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ delay: 1.1, duration: 0.6 }}
-            type="text"
-            placeholder="Enter your name"
-            required
-            className="flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-darkHover/30 dark:border-white/90"
-            name="name"
-          />
+        {/* Honeypot — hidden from users, catches bots. */}
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="hidden"
+        />
 
-          <motion.input
-            initial={{ x: 50, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
-            type="email"
-            placeholder="Enter your email"
-            required
-            className="flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-darkHover/30 dark:border-white/90"
-            name="email"
-          />
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div>
+            <label htmlFor="name" className="sr-only">
+              Your name
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Enter your name"
+              required
+              className={inputClasses}
+            />
+          </div>
+          <div>
+            <label htmlFor="email" className="sr-only">
+              Your email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              required
+              className={inputClasses}
+            />
+          </div>
         </div>
 
-        <motion.textarea
-          initial={{ y: 100, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.3, duration: 0.6 }}
+        <label htmlFor="message" className="sr-only">
+          Your message
+        </label>
+        <textarea
+          id="message"
+          name="message"
           rows="6"
           placeholder="Enter your message"
           required
-          className="w-full p-4 outline-none border-[0.5px] border-gray-400 rounded-md bg-white mb-6 dark:bg-darkHover/30 dark:border-white/90"
-          name="message"
-        ></motion.textarea>
+          className={`${inputClasses} mb-6`}
+        />
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
+        <button
           type="submit"
-          className="py-3 px-8 w-max flex items-center justify-between gap-2 bg-black/80 text-white rounded-full mx-auto hover:bg-black duration-500 dark:bg-transparent dark:border-[0.5px] dark:hover:bg-darkHover"
+          disabled={isSending}
+          className="mx-auto flex w-max items-center justify-between gap-2 rounded-full bg-black/80 px-8 py-3 text-white transition duration-300 hover:bg-black disabled:cursor-not-allowed disabled:opacity-60 dark:border-[0.5px] dark:bg-transparent dark:hover:bg-darkHover"
         >
-          Submit now{" "}
-          <Image src={assets.right_arrow_white} alt="arrow" className="w-4" />
-        </motion.button>
+          {isSending ? "Sending..." : "Submit now"}
+          <Image src={assets.right_arrow_white} alt="" className="w-4" />
+        </button>
 
         {alert && (
-          <motion.div
-            role="alert"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`mt-6 flex items-center gap-2 justify-center rounded-md px-4 py-3 text-sm font-medium shadow-sm max-w-md mx-auto ${alert.style}`}
+          <div
+            role="status"
+            aria-live="polite"
+            className={`mx-auto mt-6 flex max-w-md items-center justify-center gap-2 rounded-md px-4 py-3 text-sm font-medium shadow-sm ${alert.style}`}
           >
             {alert.icon === "spinner" && (
-              <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
             )}
             {alert.icon === "check" && (
               <svg
-                className="w-5 h-5 text-green-700 dark:text-green-200"
+                className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -210,10 +173,11 @@ const Contact = () => {
             )}
             {alert.icon === "cross" && (
               <svg
-                className="w-5 h-5 text-red-700 dark:text-red-200"
+                className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -224,10 +188,10 @@ const Contact = () => {
               </svg>
             )}
             <span>{alert.msg}</span>
-          </motion.div>
+          </div>
         )}
       </motion.form>
-    </motion.div>
+    </section>
   );
 };
 

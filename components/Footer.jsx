@@ -1,52 +1,67 @@
-"use client";
 import { assets } from "@/assets/assets";
+import { siteConfig } from "@/lib/site";
 import Image from "next/image";
-import React from "react";
 
-const Footer = ({ isDarkMode }) => {
+const socialLinks = [
+  { label: "GitHub", href: siteConfig.socials.github },
+  { label: "LinkedIn", href: siteConfig.socials.linkedin },
+  { label: "Twitter", href: siteConfig.socials.twitter },
+];
+
+const Footer = () => {
   return (
-    <div className="mt-20">
+    <footer className="mt-20">
       <div className="text-center">
         <Image
-          src={isDarkMode ? assets.logo_dark : assets.logo}
-          alt=""
-          className="w-52 mx-auto rounded-full"
+          src={assets.logo}
+          alt="Sumit Singh logo"
+          className="mx-auto w-52 rounded-full dark:hidden"
+        />
+        <Image
+          src={assets.logo_dark}
+          alt="Sumit Singh logo"
+          className="mx-auto hidden w-52 rounded-full dark:block"
         />
 
         <a
-          href="mailto:sumitme1620@gmail.com"
-          className="w-max flex items-center gap-2 -mt-4 mx-auto"
+          href={`mailto:${siteConfig.email}`}
+          className="mx-auto -mt-4 flex w-max items-center gap-2"
         >
           <Image
-            src={isDarkMode ? assets.mail_icon_dark : assets.mail_icon}
-            alt="Email Icon"
-            className="w-6"
+            src={assets.mail_icon}
+            alt=""
+            className="w-6 dark:hidden"
           />
-          sumitme1620@gmail.com
+          <Image
+            src={assets.mail_icon_dark}
+            alt=""
+            className="hidden w-6 dark:block"
+          />
+          {siteConfig.email}
         </a>
       </div>
 
-      <div className="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-6">
-        <p>© 2025 Sumit Singh. All rights reserved.</p>
-        <ul className="flex items-center gap-10 justify-center mt-4 sm:mt-0">
-          <li>
-            <a target="_blank" href="https://github.com/sumitme1620">
-              GitHub
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href="https://www.linkedin.com/in/sumitme1620/">
-              LinkedIn
-            </a>
-          </li>
-          <li>
-            <a target="_blank" href="https://x.com/home">
-              Twitter
-            </a>
-          </li>
+      <div className="mx-[10%] mt-12 border-t border-gray-400 py-6 text-center sm:flex sm:items-center sm:justify-between">
+        <p>
+          © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+        </p>
+        <ul className="mt-4 flex items-center justify-center gap-10 sm:mt-0">
+          {socialLinks.map(({ label, href }) => (
+            <li key={label}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${label} (opens in a new tab)`}
+                className="transition-colors hover:text-violet-600 dark:hover:text-violet-300"
+              >
+                {label}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
-    </div>
+    </footer>
   );
 };
 
