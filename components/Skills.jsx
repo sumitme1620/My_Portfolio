@@ -1,7 +1,14 @@
-import { skillsData, toolsData } from "@/assets/assets";
+import { assets, skillsData, toolsData } from "@/assets/assets";
 import Image from "next/image";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
+
+const toolLightVariants = new Map([
+  [assets.github, assets.github_light],
+  [assets.chatGpt, assets.chatGpt_light],
+  [assets.GitHub_Copilot, assets.GitHub_Copilot_light],
+  [assets.plane, assets.plane_light],
+]);
 
 // Generic, accurate line icons per category (avoids shipping questionable brand marks).
 const categoryIcons = {
@@ -75,14 +82,32 @@ const Skills = () => {
           Tools I use daily
         </h4>
         <ul className="flex flex-wrap justify-center gap-3 sm:gap-5">
-          {toolsData.map((tool, index) => (
-            <li
-              key={index}
-              className="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-300 rounded-lg bg-darkTheme dark:bg-transparent transition duration-300 hover:-translate-y-1 dark:border-white/20"
-            >
-              <Image src={tool} alt="" className="w-5 sm:w-7" />
-            </li>
-          ))}
+          {toolsData.map((tool, index) => {
+            const lightVariant = toolLightVariants.get(tool);
+            return (
+              <li
+                key={index}
+                className="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-300 rounded-lg transition duration-300 hover:-translate-y-1 dark:border-white/20"
+              >
+                {lightVariant ? (
+                  <>
+                    <Image
+                      src={lightVariant}
+                      alt=""
+                      className="w-5 sm:w-7 dark:hidden"
+                    />
+                    <Image
+                      src={tool}
+                      alt=""
+                      className="w-5 sm:w-7 hidden dark:block"
+                    />
+                  </>
+                ) : (
+                  <Image src={tool} alt="" className="w-5 sm:w-7" />
+                )}
+              </li>
+            );
+          })}
         </ul>
       </Reveal>
     </section>

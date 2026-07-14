@@ -1,6 +1,7 @@
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import Reveal from "./ui/Reveal";
+import { btnPrimary, btnSecondary } from "@/lib/ui";
 
 // TODO: expand the bio with your exact company timeline if you'd like it shown.
 const Header = () => {
@@ -42,22 +43,27 @@ const Header = () => {
       </Reveal>
 
       <Reveal as="p" delay={0.5} className="max-w-2xl mx-auto font-Ovo">
-        I&apos;m a Senior Frontend Developer from Mumbai with 4+ years of
-        experience building scalable AI SaaS products using React.js, Next.js,
-        JavaScript, Redux Toolkit, and Tailwind CSS. I specialize in frontend
-        architecture, performance optimization, authentication systems, and
-        delivering production-ready user experiences.
+        I’m a Senior Frontend Developer from Mumbai with 4+ years of experience
+        building scalable AI SaaS products and developer platforms. I specialize
+        in React.js, Next.js, frontend architecture, and creating fast,
+        intuitive user experiences.
       </Reveal>
 
       <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
-        <Reveal
-          as="a"
-          delay={0.7}
-          href="#contact"
-          className="px-10 py-3 border border-white rounded-full bg-black text-white flex items-center gap-2 dark:bg-transparent transition-transform hover:scale-105"
-        >
+        <Reveal as="a" delay={0.7} href="#contact" className={btnPrimary}>
           Contact me
-          <Image src={assets.right_arrow_white} alt="" className="w-4" />
+          <svg
+            className="w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </Reveal>
 
         <Reveal
@@ -65,10 +71,21 @@ const Header = () => {
           delay={0.8}
           href="/Sumit_Singh_CV.pdf"
           download
-          className="px-10 py-3 border rounded-full border-gray-500 flex items-center gap-2 bg-white text-black transition-transform hover:scale-105"
+          className={btnSecondary}
         >
           Download resume
-          <Image src={assets.download_icon} alt="" className="w-4" />
+          <svg
+            className="w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M12 3v12M8 11l4 4 4-4M5 21h14" />
+          </svg>
         </Reveal>
       </div>
     </header>

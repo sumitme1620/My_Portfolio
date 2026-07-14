@@ -17,12 +17,14 @@ import chatGpt from "./chatGpt.png";
 import claude from "./claude.png";
 import GitHub_Copilot from "./GitHub_Copilot.png";
 import plane from "./plane.png";
-import right_arrow_white from "./right-arrow-white.png";
+import github_light from "./gitHub_light.png";
+import chatGpt_light from "./chatGpt_light.png";
+import GitHub_Copilot_light from "./gitHub_Copilot_light.png";
+import plane_light from "./plane_light.png";
 import logo from "./logo_light.png";
 import logo_dark from "./logo_dark.png";
 import mail_icon from "./mail_icon.png";
 import mail_icon_dark from "./mail_icon_dark.png";
-import download_icon from "./download-icon.png";
 import hand_icon from "./hand-icon.png";
 import header_bg_color from "./header-bg-color.png";
 import send_icon from "./send-icon.png";
@@ -47,12 +49,14 @@ export const assets = {
   claude,
   GitHub_Copilot,
   plane,
-  right_arrow_white,
+  github_light,
+  chatGpt_light,
+  GitHub_Copilot_light,
+  plane_light,
   logo,
   logo_dark,
   mail_icon,
   mail_icon_dark,
-  download_icon,
   hand_icon,
   header_bg_color,
   send_icon,
@@ -265,18 +269,17 @@ export const workData = [
     link: "https://film-verse-beta.vercel.app/",
   },
   {
-    title: "Shras Holidays",
-    description: "Travel made easy",
-    bgImage: "/work-7.png",
-    link: "https://shrasholidays.com/",
-  },
-  {
     title: "TSBridge Edu",
     description: "Education platform",
     bgImage: "/work-8.png",
     link: "https://tsbridgeedu.in/",
   },
-
+  {
+    title: "Shras Holidays",
+    description: "Travel made easy",
+    bgImage: "/work-7.png",
+    link: "https://shrasholidays.com/",
+  },
   {
     title: "InfluensarHut",
     description: "Influencer marketing platform",

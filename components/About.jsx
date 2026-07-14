@@ -33,13 +33,12 @@ const About = () => {
             as="p"
             className="mb-10 max-w-2xl font-Ovo text-gray-700 dark:text-white/80"
           >
-            I’m a Senior Frontend Developer with 4+ years of experience
-            designing and building production-grade AI SaaS platforms, developer
-            ecosystems, and scalable web applications. I specialize in React.js,
-            Next.js, JavaScript, Redux Toolkit, and modern frontend
-            architecture, with expertise in authentication, real-time
-            collaboration, performance optimization, and building products from
-            concept to production.
+            Over the past 4+ years, I've built production-ready AI SaaS
+            platforms, developer ecosystems, and enterprise web applications
+            used by real users. I enjoy turning complex product ideas into
+            scalable frontend solutions through modern architecture, reusable
+            component systems, performance optimization, and seamless
+            collaboration with design, backend, and AI teams.
           </Reveal>
 
           <ul className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl">

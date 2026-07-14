@@ -1,9 +1,8 @@
 "use client";
-import { assets } from "@/assets/assets";
-import Image from "next/image";
 import { useState } from "react";
 import { motion } from "motion/react";
 import SectionHeading from "./ui/SectionHeading";
+import { btnPrimary } from "@/lib/ui";
 
 const ALERTS = {
   sending: {
@@ -137,14 +136,23 @@ const Contact = () => {
           className={`${inputClasses} mb-6`}
         />
 
-        <button
-          type="submit"
-          disabled={isSending}
-          className="mx-auto flex w-max items-center justify-between gap-2 rounded-full bg-black/80 px-8 py-3 text-white transition duration-300 hover:bg-black disabled:cursor-not-allowed disabled:opacity-60 dark:border-[0.5px] dark:bg-transparent dark:hover:bg-darkHover"
-        >
-          {isSending ? "Sending..." : "Submit now"}
-          <Image src={assets.right_arrow_white} alt="" className="w-4" />
-        </button>
+        <div className="flex justify-center">
+          <button type="submit" disabled={isSending} className={btnPrimary}>
+            {isSending ? "Sending..." : "Submit now"}
+            <svg
+              className="w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+        </div>
 
         {alert && (
           <div

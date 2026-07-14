@@ -5,6 +5,7 @@ import { workData } from "@/assets/assets";
 import Reveal from "./ui/Reveal";
 import SectionHeading from "./ui/SectionHeading";
 import ProjectCard from "./ui/ProjectCard";
+import { btnSecondary } from "@/lib/ui";
 
 const Work = () => {
   const [showAll, setShowAll] = useState(false);
@@ -31,10 +32,11 @@ const Work = () => {
       </div>
 
       {workData.length > 3 && (
-        <Reveal as="div" delay={0.15} className="flex justify-center">
+        <Reveal as="div" delay={0.15} className="flex justify-center my-20">
           <button
             onClick={() => setShowAll(!showAll)}
-            className="w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto my-20 hover:bg-lightHover duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover"
+            aria-expanded={showAll}
+            className={btnSecondary}
           >
             {showAll ? "Show less" : "Show more"}
 
