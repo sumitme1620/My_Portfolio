@@ -30,8 +30,8 @@ const Header = () => {
         delay={0.2}
         className="flex items-center justify-center gap-2 text-xl md:text-2xl mb-1 font-Ovo"
       >
-        Hi! I&apos;m Sumit Singh
-        <Image src={assets.hand_icon} alt="waving hand" className="w-6" />
+        Hi, I&apos;m Sumit Singh
+        {/* <Image src={assets.hand_icon} alt="waving hand" className="w-6" /> */}
       </Reveal>
 
       <Reveal
